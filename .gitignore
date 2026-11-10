@@ -1,0 +1,32 @@
+# Entorno local
+.env
+.tmp/
+.cache/
+.zap/
+.zap2/
+.zap3/
+.localstack/
+.aws/
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+terraform/tfplan
+api/node_modules/
+evidence/*.gif
+
+# Documento y plantillas locales (no se publican)
+header.tex
+Makefile
+Rubrica_Act3.pdf
+instrucciones.txt
+*.pdf
+references.bib
+
+# Artefactos de prueba que no forman parte del reporte
+evidence/test.png
+evidence/test.gif
+evidence/tapes/test.tape
+evidence/trivy-node14-critical.txt
+evidence/trivy-node18-critical.txt
+evidence/trivy-node18-alpine-critical.txt
