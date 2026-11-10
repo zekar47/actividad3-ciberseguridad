@@ -1,0 +1,70 @@
+Entorno Actividad 3 listo.
+  aws:        aws-cli/2.35.11 Python/3.14.6
+  terraform:  1.15.8
+  trivy:      Version: 0.73.0
+  node:       v22.23.2
+  awslocal:   aws-cli/2.35.11 Python/3.14.6
+  endpoint:   http://localhost:4566
+== Rol de aplicación ==
+{
+  "Role": {
+    "RoleName": "actividad3-app-role",
+    "Arn": "arn:aws:iam::000000000000:role/actividad3-app-role",
+    "AssumeRolePolicyDocument": {
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "ecs-tasks.amazonaws.com"
+          },
+          "Sid": "AllowEcsTasksToAssumeRole"
+        }
+      ],
+      "Version": "2012-10-17"
+    }
+  }
+}
+
+== Políticas administradas adjuntas al rol ==
+{
+  "AttachedPolicies": [
+    {
+      "PolicyName": "actividad3-s3-read-only",
+      "PolicyArn": "arn:aws:iam::000000000000:policy/actividad3-s3-read-only"
+    }
+  ]
+}
+
+== Políticas inline del rol (debe estar vacío: no hay permisos embebidos) ==
+{
+  "PolicyNames": []
+}
+
+== Documento de la política de permisos mínimos ==
+{
+  "Statement": [
+    {
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetBucketLocation"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::actividad3-seguro-2024",
+      "Sid": "ListOnlySecureBucket"
+    },
+    {
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::actividad3-seguro-2024/*",
+      "Sid": "ReadOnlyObjectsInSecureBucket"
+    }
+  ],
+  "Version": "2012-10-17"
+}
+
+== Acciones permitidas (resumen) ==
+Allow: s3:ListBucket, s3:GetBucketLocation sobre arn:aws:s3:::actividad3-seguro-2024
+Allow: s3:GetObject sobre arn:aws:s3:::actividad3-seguro-2024/*

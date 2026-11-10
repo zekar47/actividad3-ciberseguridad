@@ -1,0 +1,98 @@
+== Estado del servicio ==
+HTTP 200  GET /health
+{
+  "status": "ok",
+  "service": "actividad3-api",
+  "timestamp": "2026-11-09T18:48:14.304Z"
+}
+
+== Inicio de sesión (admin) ==
+Token JWT emitido (primeros 40 caracteres): eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ...
+
+== Inicio de sesión (analista) ==
+Token JWT emitido (primeros 40 caracteres): eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ...
+
+== /api/profile sin token (debe ser 401) ==
+HTTP 401  GET /api/profile
+{
+  "error": "token_requerido",
+  "message": "Debes enviar un token JWT en el encabezado Authorization: Bearer <token>."
+}
+
+== /api/profile con token admin (debe ser 200) ==
+HTTP 200  GET /api/profile
+{
+  "message": "Perfil consultado con un token JWT válido.",
+  "user": {
+    "username": "admin",
+    "name": "Administrador de la actividad",
+    "role": "admin"
+  },
+  "token_claims": {
+    "sub": "admin",
+    "role": "admin",
+    "issuer": "actividad3-api",
+    "audience": "actividad3-client",
+    "expires_at": "2026-11-09T19:03:14.000Z"
+  }
+}
+
+== /api/admin con token admin (debe ser 200) ==
+HTTP 200  GET /api/admin
+{
+  "message": "Acceso concedido al panel de administración.",
+  "requested_by": "admin",
+  "role": "admin",
+  "admin_data": {
+    "bucket": "actividad3-seguro-2024",
+    "encryption": "AES256",
+    "public_access_blocked": true
+  }
+}
+
+== /api/admin con token de analista (debe ser 403) ==
+HTTP 403  GET /api/admin
+{
+  "error": "permiso_denegado",
+  "message": "El token es válido, pero el rol no tiene permiso para este recurso."
+}
+
+== /api/reports con token de analista (debe ser 200) ==
+HTTP 200  GET /api/reports
+{
+  "message": "Reporte de seguridad disponible.",
+  "requested_by": "analista",
+  "role": "analyst",
+  "reports": [
+    {
+      "id": 1,
+      "name": "trivy-node14",
+      "severity": "critical"
+    },
+    {
+      "id": 2,
+      "name": "trivy-node18",
+      "severity": "none-critical"
+    },
+    {
+      "id": 3,
+      "name": "zap-baseline",
+      "severity": "informational"
+    }
+  ]
+}
+
+== /api/profile con token inválido (debe ser 401) ==
+HTTP 401  GET /api/profile
+{
+  "error": "token_invalido",
+  "message": "El token no es válido o no fue emitido por esta API."
+}
+
+== Credenciales incorrectas (debe ser 401) ==
+HTTP 401  POST /auth/login
+{
+  "error": "credenciales_invalidas",
+  "message": "Usuario o contraseña incorrectos."
+}
+

@@ -1,0 +1,55 @@
+Entorno Actividad 3 listo.
+  aws:        aws-cli/2.35.11 Python/3.14.6
+  terraform:  1.15.8
+  trivy:      Version: 0.73.0
+  node:       v22.23.2
+  awslocal:   aws-cli/2.35.11 Python/3.14.6
+  endpoint:   http://localhost:4566
+== Cifrado del bucket ==
+{
+  "ServerSideEncryptionConfiguration": {
+    "Rules": [
+      {
+        "ApplyServerSideEncryptionByDefault": {
+          "SSEAlgorithm": "AES256"
+        },
+        "BucketKeyEnabled": false
+      }
+    ]
+  }
+}
+
+== Bloqueo de acceso público ==
+{
+  "PublicAccessBlockConfiguration": {
+    "BlockPublicAcls": true,
+    "IgnorePublicAcls": true,
+    "BlockPublicPolicy": true,
+    "RestrictPublicBuckets": true
+  }
+}
+
+== Estatus de política pública ==
+(No implementado en LocalStack Community; se valida con la política explícita.)
+
+== Política del bucket ==
+{
+  "Statement": [
+    {
+      "Action": "s3:*",
+      "Condition": {
+        "ArnNotEquals": {
+          "aws:PrincipalArn": "arn:aws:iam::000000000000:role/actividad3-app-role"
+        }
+      },
+      "Effect": "Deny",
+      "Principal": "*",
+      "Resource": [
+        "arn:aws:s3:::actividad3-seguro-2024/*",
+        "arn:aws:s3:::actividad3-seguro-2024"
+      ],
+      "Sid": "DenyEveryoneExceptAppRole"
+    }
+  ],
+  "Version": "2012-10-17"
+}
