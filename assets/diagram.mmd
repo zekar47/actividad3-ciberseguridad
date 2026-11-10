@@ -1,0 +1,38 @@
+flowchart TB
+    subgraph Cliente["Cliente y pruebas de seguridad"]
+        U["Usuario / cliente HTTP"]
+        ZAP["OWASP ZAP<br/>escaneo automatizado"]
+    end
+
+    subgraph Docker["Contenedor Docker"]
+        API["API Node.js 18<br/>Express"]
+        MW["Middleware JWT<br/>HS256 · iss · aud · exp"]
+        R1["GET /api/profile"]
+        R2["GET /api/admin<br/>rol admin"]
+        R3["GET /api/reports<br/>admin / analyst"]
+    end
+
+    subgraph AWS["AWS local emulada con LocalStack"]
+        S3[("S3<br/>actividad3-seguro-2024")]
+        ENC["Cifrado SSE<br/>AES-256"]
+        PAB["Public Access Block<br/>4 controles activos"]
+        BP["Bucket policy<br/>Deny excepto rol de app"]
+        IAM["Rol IAM<br/>actividad3-app-role"]
+        POL["Política IAM<br/>s3:GetObject · s3:ListBucket"]
+    end
+
+    TRIVY["Trivy<br/>escaneo de imagen"]
+
+    U -->|"login + token"| API
+    ZAP -->|"pruebas de autenticación"| API
+    API --> MW
+    MW --> R1
+    MW --> R2
+    MW --> R3
+    API -->|"SDK AWS / awslocal"| S3
+    IAM --> POL
+    POL -->|"permiso de lectura"| S3
+    S3 --- ENC
+    S3 --- PAB
+    S3 --- BP
+    TRIVY -.->|"analiza"| Docker
