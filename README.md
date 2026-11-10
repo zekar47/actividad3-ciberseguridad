@@ -1,3 +1,5 @@
+> **Repositorio del proyecto:** [github.com/zekar47/actividad3-ciberseguridad](https://github.com/zekar47/actividad3-ciberseguridad)
+
 ## Resumen
 
 Implementé un entorno de seguridad en la nube de extremo a extremo con **Terraform**, **Docker**, **Trivy**, **Node.js/Express**, **JWT**, **OWASP ZAP**, **IAM** y **LocalStack**. Todo el software quedó aislado con **Nix** y el código de cada fase está en este repositorio.

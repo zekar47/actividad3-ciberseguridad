@@ -18,6 +18,8 @@ evidence/*.gif
 # Documento y plantillas locales (no se publican)
 header.tex
 Makefile
+metadata.yaml
+template.latex
 Rubrica_Act3.pdf
 instrucciones.txt
 *.pdf
