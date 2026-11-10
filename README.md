@@ -1,22 +1,3 @@
----
-title: "Actividad 3: Seguridad en la nube, contenedores y APIs"
-author: "César Montoya Caballero 2992400"
-date: \today
-course: "Ciberseguridad"
-teacher: "Profesor de la asignatura"
-institution: "Universidad Tecmilenio"
-compile: true
-titlepage: true
----
-
-\newpage
-
-\begin{center}
-\textbf{Universidad Tecmilenio}\\[2pt]
-Ciberseguridad\\[2pt]
-Actividad 3
-\end{center}
-
 ## Resumen
 
 Implementé un entorno de seguridad en la nube de extremo a extremo con **Terraform**, **Docker**, **Trivy**, **Node.js/Express**, **JWT**, **OWASP ZAP**, **IAM** y **LocalStack**. Todo el software quedó aislado con **Nix** y el código de cada fase está en este repositorio.
